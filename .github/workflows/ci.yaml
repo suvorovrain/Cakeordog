@@ -1,0 +1,47 @@
+---
+
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  run-analyzers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y shellcheck
+          sudo apt install -y shfmt
+          sudo apt install -y cargo
+          cargo install taplo-cli
+          python -m pip install --upgrade pip
+          pip install yamllint
+
+      - name: Check shell scripts
+        run: ./scripts/ci/lint-shell.sh
+
+      - name: Check pyproject.toml
+        run: ./scripts/ci/lint-toml.sh
+
+      - name: Lint code
+        run: ./scripts/ci/lint-code.sh
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run tests and display coverage
+        run: ./scripts/ci/tests_coverage.sh
