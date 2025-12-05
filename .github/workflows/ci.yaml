@@ -27,6 +27,7 @@ jobs:
           cargo install taplo-cli
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+          uv sync
 
       - name: Check shell scripts
         run: ./scripts/ci/lint-shell.sh
@@ -47,6 +48,7 @@ jobs:
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+          uv sync
 
       - name: Run tests and display coverage
         run: ./scripts/ci/tests_coverage.sh
