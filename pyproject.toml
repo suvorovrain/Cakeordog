@@ -3,7 +3,7 @@ name = "cakeordog"
 version = "0.1.0"
 description = "Classificator for Muffin vs chihuahua dataset https://www.kaggle.com/datasets/samuelcortinhas/muffin-vs-chihuahua-image-classification/data"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = ["numpy>=1.24.0"]
 
 [build-system]
@@ -12,11 +12,11 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 88
-target-version = ['py38']
+target-version = ['py39']
 
 [tool.ruff]
 line-length = 88
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
@@ -39,7 +39,7 @@ indent-style = "space"
 quote-style = "double"
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
