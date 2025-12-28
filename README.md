@@ -31,3 +31,12 @@ PYTHONPATH=src python -m cake_or_dog.cli predict \
   --model models/svc_muffin_chihuahua.joblib \
   --images img1.jpg img2.png
 ```
+## Benchmark
+
+Results for test data from  
+https://www.kaggle.com/datasets/samuelcortinhas/muffin-vs-chihuahua-image-classification/data
+
+| Class       | Correct | Total | Accuracy |
+|-------------|---------|-------|----------|
+| chihuahua   | 532     | 640   | 0.8313   |
+| muffin      | 449     | 544   | 0.8254   |
