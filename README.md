@@ -20,14 +20,14 @@ pip install -r requirements.txt
 ```
 ## Train
 ```
-PYTHONPATH=src python -m cake_or_dog.cli train \
+PYTHONPATH=src python -m cakeordog.cli train \
   --train-dir /path/to/data/train \
   --test-dir  /path/to/data/test \
   --model-out models/svc_muffin_chihuahua.joblib
 ```
 ## Predict
 ```
-PYTHONPATH=src python -m cake_or_dog.cli predict \
+PYTHONPATH=src python -m cakeordog.cli predict \
   --model models/svc_muffin_chihuahua.joblib \
   --images img1.jpg img2.png
 ```
