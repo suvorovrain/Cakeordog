@@ -32,6 +32,9 @@ PYTHONPATH=src python -m cakeordog.cli predict \
   --images img1.jpg img2.png
 ```
 ## Benchmark
+OS: Kubuntu 24.04
+RAM: 16GB
+CPU: Intel i712700H
 
 Results for test data from  
 https://www.kaggle.com/datasets/samuelcortinhas/muffin-vs-chihuahua-image-classification/data
