@@ -33,8 +33,10 @@ PYTHONPATH=src python -m cakeordog.cli predict \
 ```
 ## Benchmark
 OS: Kubuntu 24.04
+
 RAM: 16GB
-CPU: Intel i712700H
+
+CPU: Intel i7-12700H
 
 Results for test data from  
 https://www.kaggle.com/datasets/samuelcortinhas/muffin-vs-chihuahua-image-classification/data
