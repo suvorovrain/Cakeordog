@@ -1,14 +1,14 @@
 import os
 from concurrent.futures import ProcessPoolExecutor
+
+import numpy as np
+from skimage.color import gray2rgb, rgba2rgb
 from skimage.io import imread
 from skimage.transform import resize
-from skimage.color import gray2rgb, rgba2rgb
-import numpy as np
 from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 
 
 def get_five() -> int:
@@ -42,6 +42,7 @@ def load_one(args):
     x = img.reshape(-1).astype(np.float32)
     return x, label
 
+
 def load_split_parallel(root_dir, categories, max_workers=None):
     tasks = []
     for label, category in enumerate(categories):
@@ -55,40 +56,32 @@ def load_split_parallel(root_dir, categories, max_workers=None):
     data, labels = zip(*out)
     return np.stack(data), np.asarray(labels, dtype=np.int64)
 
+
 def main() -> None:
     """Entry point"""
     result = get_five()
     print(f"Result: {result}")
-    input_train_dir ='/home/suvorovrain/Projects/Cakeordog/data/train'
-    input_test_dir ='/home/suvorovrain/Projects/Cakeordog/data/test'
-    categories = ['muffin', 'chihuahua']
+    input_train_dir = "/home/suvorovrain/Projects/Cakeordog/data/train"
+    input_test_dir = "/home/suvorovrain/Projects/Cakeordog/data/test"
+    categories = ["muffin", "chihuahua"]
 
     data_train, labels_train = load_split_parallel(input_train_dir, categories)
-    data_test,  labels_test  = load_split_parallel(input_test_dir, categories)
+    data_test, labels_test = load_split_parallel(input_test_dir, categories)
     print("reading done")
-   
-    pipe = Pipeline([
-        ("scaler", StandardScaler()),
-        ("svc", SVC(kernel="rbf"))
-    ])
+
+    pipe = Pipeline([("scaler", StandardScaler()), ("svc", SVC(kernel="rbf"))])
 
     param_grid = {
         "svc__C": [0.1, 1, 10, 100, 1000],
         "svc__gamma": ["scale", "auto", 1e-1, 1e-2, 1e-3, 1e-4, 1e-5],
     }
 
-    grid = GridSearchCV(
-        pipe,
-        param_grid=param_grid,
-        cv=5,
-        n_jobs=-1,
-        verbose=2
-    )
+    grid = GridSearchCV(pipe, param_grid=param_grid, cv=5, n_jobs=-1, verbose=2)
 
-    grid.fit(data_train,labels_train)
+    grid.fit(data_train, labels_train)
     best_model = grid.best_estimator_
 
-    test_accuracy = best_model.score(data_test,labels_test)
+    test_accuracy = best_model.score(data_test, labels_test)
     print("Best params:", grid.best_params_)
     print("Test accuracy:", test_accuracy)
 

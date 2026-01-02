@@ -1,11 +1,11 @@
 import argparse
 import os
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import List, Optional, Tuple
-from concurrent.futures import ThreadPoolExecutor
 
-from cakeordog.data import load_split_parallel, load_single_image, CATEGORIES
-from cakeordog.model import train_svm_gridsearch, save_model, load_model, predict_label
+from cakeordog.data import CATEGORIES, load_single_image, load_split_parallel
+from cakeordog.model import load_model, predict_label, save_model, train_svm_gridsearch
 
 
 def cmd_train(args: argparse.Namespace) -> int:

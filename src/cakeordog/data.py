@@ -3,10 +3,9 @@ from concurrent.futures import ProcessPoolExecutor
 from typing import List, Tuple
 
 import numpy as np
+from skimage.color import gray2rgb, rgba2rgb
 from skimage.io import imread
 from skimage.transform import resize
-from skimage.color import gray2rgb, rgba2rgb
-
 
 CATEGORIES: List[str] = ["muffin", "chihuahua"]
 IMAGE_SIZE: Tuple[int, int] = (32, 32)
