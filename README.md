@@ -9,14 +9,12 @@ sudo apt install shellcheck
 sudo apt install shfmt
 cargo install taplo-cli # lint-fmt for pyproject.toml
 curl -LsSf https://astral.sh/uv/install.sh | sh # setup uv
-uv sync
 ```
 
 ## Install
 ```
-python -m venv .venv
+uv sync
 source .venv/bin/activate
-pip install -r requirements.txt
 ```
 ## Train
 ```
