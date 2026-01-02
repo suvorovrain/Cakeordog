@@ -1,6 +1,6 @@
 """Tests for calculator"""
 
-from cakeordog.calculator import get_five
+from cakeordog.main import get_five
 
 
 def test_get_five_returns_five() -> None:
