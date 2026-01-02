@@ -1,6 +1,6 @@
 import os
 from concurrent.futures import ProcessPoolExecutor
-from typing import List, Tuple
+from typing import List, Tuple, cast
 
 import numpy as np
 from skimage.color import gray2rgb, rgba2rgb
@@ -13,9 +13,9 @@ IMAGE_SIZE: Tuple[int, int] = (32, 32)
 
 def _ensure_rgb(img: np.ndarray, path: str) -> np.ndarray:
     if img.ndim == 2:
-        return gray2rgb(img)
+        return cast(np.ndarray, gray2rgb(img))
     if img.ndim == 3 and img.shape[2] == 4:
-        return rgba2rgb(img)
+        return cast(np.ndarray, rgba2rgb(img))
     if img.ndim == 3 and img.shape[2] == 3:
         return img
     raise ValueError(f"Unexpected image shape {img.shape} for {path}")
@@ -48,7 +48,7 @@ def load_split_parallel(root_dir: str) -> Tuple[np.ndarray, np.ndarray]:
     with ProcessPoolExecutor() as ex:
         out = list(ex.map(_load_one, tasks, chunksize=32))
 
-    data, labels = zip(*out)
+    data, labels = zip(*out, strict=False)
     return np.stack(data), np.asarray(labels, dtype=np.int64)
 
 
@@ -57,4 +57,4 @@ def load_single_image(path: str) -> np.ndarray:
     img = _ensure_rgb(img, path)
     img = resize(img, IMAGE_SIZE, anti_aliasing=True, preserve_range=True)
     x = img.reshape(-1).astype(np.float32)
-    return x
+    return cast(np.ndarray, x)
