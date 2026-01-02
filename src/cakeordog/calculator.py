@@ -1,14 +1,15 @@
 import os
 from concurrent.futures import ProcessPoolExecutor
+from typing import List, Tuple
 
 import numpy as np
 from skimage.color import gray2rgb, rgba2rgb
 from skimage.io import imread
 from skimage.transform import resize
-from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV  # type: ignore
+from sklearn.pipeline import Pipeline  # type: ignore
+from sklearn.preprocessing import StandardScaler  # type: ignore
+from sklearn.svm import SVC  # type: ignore
 
 
 def get_five() -> int:
@@ -25,7 +26,7 @@ def get_five() -> int:
     return 5
 
 
-def load_one(args):
+def load_one(args: Tuple[str, int]) -> Tuple[np.ndarray, int]:
     path, label = args
 
     img = imread(path)
@@ -43,7 +44,9 @@ def load_one(args):
     return x, label
 
 
-def load_split_parallel(root_dir, categories, max_workers=None):
+def load_split_parallel(
+    root_dir: str, categories: List[str], max_workers: int | None = None
+) -> Tuple[np.ndarray, np.ndarray]:
     tasks = []
     for label, category in enumerate(categories):
         cat_dir = os.path.join(root_dir, category)
@@ -53,7 +56,7 @@ def load_split_parallel(root_dir, categories, max_workers=None):
     with ProcessPoolExecutor(max_workers=max_workers) as ex:
         out = list(ex.map(load_one, tasks, chunksize=32))
 
-    data, labels = zip(*out)
+    data, labels = zip(*out, strict=False)
     return np.stack(data), np.asarray(labels, dtype=np.int64)
 
 

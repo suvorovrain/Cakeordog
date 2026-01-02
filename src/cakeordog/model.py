@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from typing import Any, Dict
 
-import joblib
+import joblib  # type: ignore
 import numpy as np
-from sklearn.model_selection import GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV  # type: ignore
+from sklearn.pipeline import Pipeline  # type: ignore
+from sklearn.preprocessing import StandardScaler  # type: ignore
+from sklearn.svm import SVC  # type: ignore
 
 
 @dataclass(frozen=True)
