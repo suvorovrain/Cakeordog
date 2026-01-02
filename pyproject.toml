@@ -5,10 +5,10 @@ description = "Classificator for Muffin vs chihuahua dataset https://www.kaggle.
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "joblib>=1.5.3",
-    "numpy>=1.24.0",
-    "scikit-image>=0.24.0",
-    "scikit-learn>=1.6.1",
+  "joblib>=1.5.3",
+  "numpy>=1.24.0",
+  "scikit-image>=0.24.0",
+  "scikit-learn>=1.6.1",
 ]
 
 [build-system]
