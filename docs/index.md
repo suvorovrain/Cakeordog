@@ -1,3 +1,7 @@
+```{toctree}
+index
+modules
+```
 # Cakeordog
 Simple CLI classificator for "Muffin vs chihuahua" dataset https://www.kaggle.com/datasets/samuelcortinhas/muffin-vs-chihuahua-image-classification/data:
 - train: train an SVM model and save it
