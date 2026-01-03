@@ -66,6 +66,3 @@ dev = [
   "sphinx>=7.1.2",
   "sphinx-rtd-theme>=0.5.1",
 ]
-
-[project.scripts]
-cakeordog = "cakeordog.calculator:main"
