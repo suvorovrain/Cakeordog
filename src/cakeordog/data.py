@@ -60,6 +60,9 @@ def _load_one(args: Tuple[str, int]) -> Tuple[np.ndarray, int]:
 
     Returns:
         Tuple[np.ndarray, int]: Flattened image vector and label
+
+    Raises:
+        ValueError: If image has unexpected number of dimensions or channels
     """
     path, label = args
     img = imread(path)

@@ -184,6 +184,9 @@ def cmd_predict(args: argparse.Namespace) -> int:
                 - path: Original file path
                 - pred: Predicted label (0 or 1)
                 - true_label: Ground truth label if detectable, else None
+        Raises:
+            FileNotFoundError: If image file doesn't exist
+            ValueError: If image format is invalid
         """
         x = load_single_image(image_path)
         pred_label = predict_label(model, x)
