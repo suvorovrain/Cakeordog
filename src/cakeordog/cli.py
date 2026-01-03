@@ -172,7 +172,7 @@ def cmd_predict(args: argparse.Namespace) -> int:
     model = load_model(args.model)
     paths = _expand_inputs(args.images)
 
-    def worker(path: str) -> Tuple[str, int, Optional[int]]:
+    def worker(image_path: str) -> Tuple[str, int, Optional[int]]:
         """
         Worker function for parallel prediction.
 
@@ -185,10 +185,10 @@ def cmd_predict(args: argparse.Namespace) -> int:
                 - pred: Predicted label (0 or 1)
                 - true_label: Ground truth label if detectable, else None
         """
-        x = load_single_image(path)
-        pred = predict_label(model, x)
-        true_label = _true_label_from_path(path)
-        return path, pred, true_label
+        x = load_single_image(image_path)
+        pred_label = predict_label(model, x)
+        extracted_true_label = _true_label_from_path(image_path)
+        return image_path, pred_label, extracted_true_label
 
     workers = min(32, (os.cpu_count() or 1) * 4)
 
