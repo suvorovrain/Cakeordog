@@ -57,6 +57,7 @@ def _load_one(args: Tuple[str, int], anti_aliasing=True) -> Tuple[np.ndarray, in
         args: Tuple containing:
             - path: Image file path
             - label: Integer label (0 for muffin, 1 for chihuahua)
+        anti_aliasing: turn on anti aliasing
 
     Returns:
         Tuple[np.ndarray, int]: Flattened image vector and label
@@ -79,6 +80,7 @@ def load_split_parallel(root_dir: str, max_count: int = 1_000_000, anti_aliasing
     Args:
         root_dir: Path to root directory containing category subdirectories
         max_count: Max count of processed photos.
+        anti_aliasing: turn on anti aliasing
 
     Returns:
         Tuple[np.ndarray, np.ndarray]:
@@ -123,6 +125,7 @@ def load_single_image(path: str, anti_aliasing=True) -> np.ndarray:
 
     Args:
         path: Path to image file
+        anti_aliasing: turn on anti aliasing
 
     Returns:
         np.ndarray: Flattened image vector ready for model input
