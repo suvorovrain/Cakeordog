@@ -49,7 +49,7 @@ def _ensure_rgb(img: np.ndarray, path: str) -> np.ndarray:
     raise ValueError(f"Unexpected image shape {img.shape} for {path}")
 
 
-def _load_one(args: Tuple[str, int]) -> Tuple[np.ndarray, int]:
+def _load_one(args: Tuple[str, int], anti_aliasing=True) -> Tuple[np.ndarray, int]:
     """
     Load and preprocess a single image file.
 
@@ -67,12 +67,12 @@ def _load_one(args: Tuple[str, int]) -> Tuple[np.ndarray, int]:
     path, label = args
     img = imread(path)
     img = _ensure_rgb(img, path)
-    img = resize(img, IMAGE_SIZE, anti_aliasing=True, preserve_range=True)
+    img = resize(img, IMAGE_SIZE, anti_aliasing=anti_aliasing, preserve_range=True)
     x = img.reshape(-1).astype(np.float32)
     return x, label
 
 
-def load_split_parallel(root_dir: str, max_count: int = 1_000_000) -> Tuple[np.ndarray, np.ndarray]:
+def load_split_parallel(root_dir: str, max_count: int = 1_000_000, anti_aliasing=True) -> Tuple[np.ndarray, np.ndarray]:
     """
     Load all images from a directory structure using parallel processing.
 
@@ -109,14 +109,15 @@ def load_split_parallel(root_dir: str, max_count: int = 1_000_000) -> Tuple[np.n
     if not tasks:
         raise ValueError(f"No files found under: {root_dir}")
 
+    anti_aliasings = [anti_aliasing] * len(tasks)
     with ProcessPoolExecutor() as ex:
-        out = list(ex.map(_load_one, tasks, chunksize=32))
+        out = list(ex.map(_load_one, tasks, anti_aliasings, chunksize=32))
 
     data, labels = zip(*out, strict=False)
     return np.stack(data), np.asarray(labels, dtype=np.int64)
 
 
-def load_single_image(path: str) -> np.ndarray:
+def load_single_image(path: str, anti_aliasing=True) -> np.ndarray:
     """
     Load and preprocess a single image for prediction.
 
@@ -132,6 +133,6 @@ def load_single_image(path: str) -> np.ndarray:
     """
     img = imread(path)
     img = _ensure_rgb(img, path)
-    img = resize(img, IMAGE_SIZE, anti_aliasing=True, preserve_range=True)
+    img = resize(img, IMAGE_SIZE, anti_aliasing=anti_aliasing, preserve_range=True)
     x = img.reshape(-1).astype(np.float32)
     return cast(np.ndarray, x)
