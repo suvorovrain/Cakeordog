@@ -40,3 +40,6 @@ Thumbs.db
 
 # Documentation
 docs/_build/
+models/notebook_model.joblib
+notebook/.ipynb_checkpoints/
+data/train/
