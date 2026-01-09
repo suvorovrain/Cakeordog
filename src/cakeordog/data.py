@@ -49,7 +49,9 @@ def _ensure_rgb(img: np.ndarray, path: str) -> np.ndarray:
     raise ValueError(f"Unexpected image shape {img.shape} for {path}")
 
 
-def _load_one(args: Tuple[str, int], anti_aliasing=True) -> Tuple[np.ndarray, int]:
+def _load_one(
+    args: Tuple[str, int], anti_aliasing: bool = True
+) -> Tuple[np.ndarray, int]:
     """
     Load and preprocess a single image file.
 
@@ -57,7 +59,7 @@ def _load_one(args: Tuple[str, int], anti_aliasing=True) -> Tuple[np.ndarray, in
         args: Tuple containing:
             - path: Image file path
             - label: Integer label (0 for muffin, 1 for chihuahua)
-        anti_aliasing: turn on anti aliasing
+        anti_aliasing: turn on anti-aliasing
 
     Returns:
         Tuple[np.ndarray, int]: Flattened image vector and label
@@ -74,7 +76,7 @@ def _load_one(args: Tuple[str, int], anti_aliasing=True) -> Tuple[np.ndarray, in
 
 
 def load_split_parallel(
-    root_dir: str, max_count: int = 1_000_000, anti_aliasing=True
+    root_dir: str, max_count: int = 1_000_000, anti_aliasing: bool = True
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Load all images from a directory structure using parallel processing.
@@ -82,7 +84,7 @@ def load_split_parallel(
     Args:
         root_dir: Path to root directory containing category subdirectories
         max_count: Max count of processed photos.
-        anti_aliasing: turn on anti aliasing
+        anti_aliasing: turn on anti-aliasing
 
     Returns:
         Tuple[np.ndarray, np.ndarray]:
@@ -94,7 +96,7 @@ def load_split_parallel(
         ValueError: If no image files are found
     """
     tasks: List[Tuple[str, int]] = []
-    category_count: dict[int] = {}
+    category_count: dict[int, int] = {}
     for label, category in enumerate(CATEGORIES):
         cat_dir = os.path.join(root_dir, category)
         if not os.path.isdir(cat_dir):
@@ -121,13 +123,13 @@ def load_split_parallel(
     return np.stack(data), np.asarray(labels, dtype=np.int64)
 
 
-def load_single_image(path: str, anti_aliasing=True) -> np.ndarray:
+def load_single_image(path: str, anti_aliasing: bool = True) -> np.ndarray:
     """
     Load and preprocess a single image for prediction.
 
     Args:
         path: Path to image file
-        anti_aliasing: turn on anti aliasing
+        anti_aliasing: turn on anti-aliasing
 
     Returns:
         np.ndarray: Flattened image vector ready for model input
