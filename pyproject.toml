@@ -5,8 +5,12 @@ description = "Classificator for Muffin vs chihuahua dataset https://www.kaggle.
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+  "ipykernel>=7.1.0",
+  "ipython>=9.9.0",
+  "ipywidgets>=8.1.8",
   "joblib>=1.5.3",
   "numpy>=1.24.0",
+  "pandas>=2.3.3",
   "scikit-image>=0.24.0",
   "scikit-learn>=1.8.0",
 ]
