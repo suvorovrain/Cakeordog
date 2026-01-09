@@ -22,10 +22,9 @@ source .venv/bin/activate
 cd docs
 uv run make html
 ```
-## Jypiter notebook
+## Jupyter notebook
 ```
 cd notebook
-uv pip install jupyter ipykernel
 uv run jupyter notebook CakeOrDog.ipynb
 ```
 Open browser and visit http://localhost:8888/notebooks/CakeOrDog.ipynb
