@@ -73,7 +73,9 @@ def _load_one(args: Tuple[str, int], anti_aliasing=True) -> Tuple[np.ndarray, in
     return x, label
 
 
-def load_split_parallel(root_dir: str, max_count: int = 1_000_000, anti_aliasing=True) -> Tuple[np.ndarray, np.ndarray]:
+def load_split_parallel(
+    root_dir: str, max_count: int = 1_000_000, anti_aliasing=True
+) -> Tuple[np.ndarray, np.ndarray]:
     """
     Load all images from a directory structure using parallel processing.
 
