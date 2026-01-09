@@ -98,7 +98,6 @@ name = "cakeordog"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "black", extra = ["jupyter"] },
     { name = "ipykernel" },
     { name = "ipython" },
     { name = "ipywidgets" },
@@ -113,7 +112,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "black" },
+    { name = "black", extra = ["jupyter"] },
     { name = "mypy" },
     { name = "myst-parser" },
     { name = "pytest" },
@@ -126,7 +125,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "black", extras = ["jupyter"], specifier = ">=25.11.0" },
     { name = "ipykernel", specifier = ">=7.1.0" },
     { name = "ipython", specifier = ">=9.9.0" },
     { name = "ipywidgets", specifier = ">=8.1.8" },
@@ -142,6 +140,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = ">=24.8.0" },
+    { name = "black", extras = ["jupyter"], specifier = ">=25.11.0" },
     { name = "mypy", specifier = ">=1.14.1" },
     { name = "myst-parser", specifier = ">=2.0.0" },
     { name = "pytest", specifier = ">=8.3.5" },
