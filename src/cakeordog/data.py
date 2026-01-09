@@ -72,12 +72,13 @@ def _load_one(args: Tuple[str, int]) -> Tuple[np.ndarray, int]:
     return x, label
 
 
-def load_split_parallel(root_dir: str) -> Tuple[np.ndarray, np.ndarray]:
+def load_split_parallel(root_dir: str, max_count: int = 1_000_000) -> Tuple[np.ndarray, np.ndarray]:
     """
     Load all images from a directory structure using parallel processing.
 
     Args:
         root_dir: Path to root directory containing category subdirectories
+        max_count: Max count of processed photos.
 
     Returns:
         Tuple[np.ndarray, np.ndarray]:
@@ -89,15 +90,21 @@ def load_split_parallel(root_dir: str) -> Tuple[np.ndarray, np.ndarray]:
         ValueError: If no image files are found
     """
     tasks: List[Tuple[str, int]] = []
+    category_count: dict[int] = {}
     for label, category in enumerate(CATEGORIES):
         cat_dir = os.path.join(root_dir, category)
         if not os.path.isdir(cat_dir):
             raise FileNotFoundError(f"Missing category directory: {cat_dir}")
 
         for fname in os.listdir(cat_dir):
+            if label in category_count and category_count[label] >= max_count:
+                break
             path = os.path.join(cat_dir, fname)
             if os.path.isfile(path):
                 tasks.append((path, label))
+                if label not in category_count:
+                    category_count[label] = 0
+                category_count[label] += 1
 
     if not tasks:
         raise ValueError(f"No files found under: {root_dir}")
